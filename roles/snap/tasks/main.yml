@@ -1,0 +1,7 @@
+---
+- name: Install snaps
+  community.general.snap:
+    name: 
+      - kubectl
+      - astral-uv
+    classic: true

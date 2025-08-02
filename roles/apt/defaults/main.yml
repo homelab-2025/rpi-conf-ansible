@@ -1,0 +1,8 @@
+common_packages:
+- name: curl
+- name: wget
+- name: git
+- name: make
+- name: nano
+- name: vim
+- name: jq

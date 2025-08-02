@@ -1,15 +1,9 @@
 ---
 - name: Set up development environment
   hosts: local
-  connection: local
   gather_facts: false
   become: true
   roles:
-    - common
+    - apt
+    - snap
     - bashrc
-    - gitconfig
-    - helm
-    - terraform
-    - gh
-    - glab
-    - uv
