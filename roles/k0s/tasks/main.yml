@@ -1,0 +1,37 @@
+---
+- name: Check if k0s is installed
+  ansible.builtin.command: k0s version
+  register: k0s_version
+  changed_when: false
+  failed_when: false
+
+- name: Install k0s
+  ansible.builtin.shell: |
+    curl --proto '=https' --tlsv1.2 -sSf https://get.k0s.sh | sudo sh
+  args:
+    executable: /bin/bash
+  when: k0s_version.rc != 0
+
+- name: Check if service k0scontroller is installed
+  ansible.builtin.stat:
+    path: /etc/systemd/system/k0scontroller.service
+  register: k0s_service_file
+
+- name: Install k0s single node
+  ansible.builtin.command: k0s install controller --single
+  when: not k0s_service_file.stat.exists
+
+- name: Enable and start service k0scontroller
+  ansible.builtin.systemd:
+    name: k0scontroller
+    state: started
+    enabled: true
+
+- name: Copy kubectl conf (admin.conf → config)
+  copy:
+    src: /var/lib/k0s/pki/admin.conf
+    dest: /home/enzo/.kube/config
+    owner: enzo
+    group: enzo
+    mode: '0600'
+    remote_src: true
