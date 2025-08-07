@@ -1,0 +1,16 @@
+---
+- name: Allow SSH
+  community.general.ufw:
+    rule: allow
+    port: ssh
+    proto: tcp
+
+- name: Allow API server port
+  community.general.ufw:
+    rule: allow
+    port: '6443'
+    proto: tcp
+
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled
