@@ -11,6 +11,12 @@
     port: '6443'
     proto: tcp
 
+- name: Allow kubernetes node ports # for private nw only
+  community.general.ufw:
+    rule: allow
+    port: '30000:32767'
+    proto: tcp
+
 - name: Enable UFW
   community.general.ufw:
     state: enabled

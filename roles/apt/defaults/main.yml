@@ -6,3 +6,4 @@ common_packages:
 - name: nano
 - name: vim
 - name: jq
+- name: open-iscsi # For longhorn
